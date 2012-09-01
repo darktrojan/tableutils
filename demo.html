@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+		@import url(table.css);
+
+		p, #list {
+			margin: 0.5em 0;
+			padding: 0;
+		}
+		#list > li {
+			display: inline;
+		}
+		#table {
+			border-collapse: collapse;
+			border: 1px #ddf solid;
+		 	white-space: nowrap;
+		}
+		tr.filtered {
+			display: none;
+		}
+		th {
+			text-align: left;
+		}
+		#table td, #table th {
+			border: 1px #ddf solid;
+			padding: 2px 4px;
+			max-width: 175px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		</style>
+	</head>
+	<body>
+		<p>Display these columns:</p>
+		<ul id="list">
+			<li><label><input type="checkbox" data-columns="0" />Name of territory</label></li>
+			<li><label><input type="checkbox" data-columns="1" />Area</label></li>
+			<li><label><input type="checkbox" data-columns="2" />Population</label></li>
+			<li><label><input type="checkbox" data-columns="3" />Population density</label></li>
+			<li><label><input type="checkbox" data-columns="4" />Capital</label></li>
+		</ul>
+		<!-- <select id="select" multiple size="5">
+			<option value="0" />Name of territory</option>
+			<option value="1" />Area</option>
+			<option value="2" />Population</option>
+			<option value="3" />Population density</option>
+			<option value="4" />Capital</option>
+		</select> -->
+		<p>Filter: <input id="filter" /></p>
+		<table cellspacing="0" id="table"
+			data-hiddencolumns="3" data-sortcolumn="0" data-sortdirection="desc">
+			<thead>
+				<tr class="sortrow">
+					<th class="sortable">Name of territory</th>
+					<th class="sortable">Area<br />(km²)</th>
+					<th class="sortable">Population<br />(July 2009 est.)</th>
+					<th class="sortable">Population density<br />(per km²)</th>
+					<th class="sortable">Capital</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Argentina</td>
+					<td align="right">2,766,890</td>
+					<td align="right">40,913,584</td>
+					<td align="right">14.8</td>
+					<td>Buenos Aires</td>
+				</tr>
+				<tr>
+					<td>Bolivia</td>
+					<td align="right">1,098,580</td>
+					<td align="right">9,775,246</td>
+					<td align="right">8.9</td>
+					<td>La Paz, Sucre</td>
+				</tr>
+				<tr>
+					<td>Brazil</td>
+					<td align="right">8,511,965</td>
+					<td align="right">198,739,269</td>
+					<td align="right">23.3</td>
+					<td>Brasília</td>
+				</tr>
+				<tr>
+					<td>Chile</td>
+					<td align="right">756,950</td>
+					<td align="right">16,601,707</td>
+					<td align="right">21.9</td>
+					<td>Santiago</td>
+				</tr>
+				<tr>
+					<td>Colombia</td>
+					<td align="right">1,138,910</td>
+					<td align="right">45,644,023</td>
+					<td align="right">40.1</td>
+					<td>Bogotá</td>
+				</tr>
+				<tr>
+					<td>Ecuador</td>
+					<td align="right">283,560</td>
+					<td align="right">14,573,101</td>
+					<td align="right">51.4</td>
+					<td>Quito</td>
+				</tr>
+				<tr>
+					<td>Falkland Islands (UK)</td>
+					<td align="right">12,173</td>
+					<td align="right">3,140</td>
+					<td align="right">0.26</td>
+					<td>Stanley</td>
+				</tr>
+				<tr>
+					<td>French Guiana (France)</td>
+					<td align="right">83,534</td>
+					<td align="right">221,500</td>
+					<td align="right">2.7</td>
+					<td>Cayenne</td>
+				</tr>
+				<tr>
+					<td>Guyana</td>
+					<td align="right">214,970</td>
+					<td align="right">772,298</td>
+					<td align="right">3.6</td>
+					<td>Georgetown</td>
+				</tr>
+				<tr>
+					<td>Paraguay</td>
+					<td align="right">406,750</td>
+					<td align="right">6,995,655</td>
+					<td align="right">17.2</td>
+					<td>Asunción</td>
+				</tr>
+				<tr>
+					<td>Peru</td>
+					<td align="right">1,285,220</td>
+					<td align="right">29,546,963</td>
+					<td align="right">23.0</td>
+					<td>Lima</td>
+				</tr>
+				<tr>
+					<td>South Georgia and South Sandwich Islands (UK)</td>
+					<td align="right">3,903</td>
+					<td align="right">0</td>
+					<td align="right">0</td>
+					<td>Grytviken</td>
+				</tr>
+				<tr>
+					<td>Suriname</td>
+					<td align="right">163,270</td>
+					<td align="right">481,267</td>
+					<td align="right">2.9</td>
+					<td>Paramaribo</td>
+				</tr>
+				<tr>
+					<td>Uruguay</td>
+					<td align="right">176,220</td>
+					<td align="right">3,494,382</td>
+					<td align="right">19.8</td>
+					<td>Montevideo</td>
+				</tr>
+				<tr>
+					<td>Venezuela</td>
+					<td align="right">912,050</td>
+					<td align="right">26,814,843</td>
+					<td align="right">29.4</td>
+					<td>Caracas</td>
+				</tr>
+			</tbody>
+		</table>
+		<div id="output"></div>
+		<script src="../extend/extend.js"></script>
+		<script src="table.js"></script>
+		<script>
+
+		var storageKey = 'tableUtilsTest';
+
+		var table = $('table');
+		var list = $('list');
+		// var select = $('select');
+		var filter = $('filter');
+		var output = $('output');
+
+		initTable(table);
+		initList(list, table);
+		// initSelect(select, table);
+		initFilter(filter, table);
+
+		if ('addEventListener' in this) {
+			table.tHead.addEventListener ('click', function () {
+				output.textContent = localStorage.getItem (table.id);
+			}, false);
+			list.addEventListener ('change', function () {
+				output.textContent = localStorage.getItem (table.id);
+			}, false);
+			output.textContent = localStorage.getItem (table.id);
+		} else {
+			table.tHead.attachEvent ('onclick', function () {
+				output.innerText = localStorage.getItem (table.id);
+			});
+			list.attachEvent ('onclick', function () {
+				output.innerText = localStorage.getItem (table.id);
+			});
+			output.innerText = localStorage.getItem (table.id);
+		}
+
+		</script>
+	</body>
+</html>

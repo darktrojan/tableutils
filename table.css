@@ -1,0 +1,11 @@
+.sortable {
+	background: #f7f7f7 url(sort-none.gif) right center no-repeat;
+	padding-right: 15px !important;
+	cursor: pointer;
+}
+.sort-asc {
+	background-image: url(sort-asc.gif);
+}
+.sort-desc {
+	background-image: url(sort-desc.gif);
+}
