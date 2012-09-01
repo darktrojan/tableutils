@@ -36,20 +36,20 @@
 		<ul id="list">
 			<li><label><input type="checkbox" data-columns="0" />Name of territory</label></li>
 			<li><label><input type="checkbox" data-columns="1" />Area</label></li>
-			<li><label><input type="checkbox" data-columns="2" />Population</label></li>
-			<li><label><input type="checkbox" data-columns="3" />Population density</label></li>
+			<li><label><input type="checkbox" data-columns="2,3" />Population (2 columns)</label></li>
 			<li><label><input type="checkbox" data-columns="4" />Capital</label></li>
+			<li><label><input type="checkbox" data-columns="5" />Independence</label></li>
 		</ul>
 		<!-- <select id="select" multiple size="5">
 			<option value="0" />Name of territory</option>
 			<option value="1" />Area</option>
-			<option value="2" />Population</option>
-			<option value="3" />Population density</option>
+			<option value="2,3" />Population (2 columns)</option>
 			<option value="4" />Capital</option>
+			<option value="5" />Independence</option>
 		</select> -->
-		<p>Filter: <input id="filter" /></p>
+		<p>Filter: <input id="filter" /><button onclick="clearFilter();">Clear</button></p>
 		<table cellspacing="0" id="table"
-			data-hiddencolumns="3" data-sortcolumn="0" data-sortdirection="desc">
+			data-hiddencolumns="2,3" data-sortcolumn="0" data-sortdirection="asc">
 			<thead>
 				<tr class="sortrow">
 					<th class="sortable">Name of territory</th>
@@ -57,6 +57,7 @@
 					<th class="sortable">Population<br />(July 2009 est.)</th>
 					<th class="sortable">Population density<br />(per km²)</th>
 					<th class="sortable">Capital</th>
+					<th class="sortable">Independence</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -66,6 +67,7 @@
 					<td align="right">40,913,584</td>
 					<td align="right">14.8</td>
 					<td>Buenos Aires</td>
+					<td data-sortable="1816-07-09">9 July 1816</td>
 				</tr>
 				<tr>
 					<td>Bolivia</td>
@@ -73,6 +75,7 @@
 					<td align="right">9,775,246</td>
 					<td align="right">8.9</td>
 					<td>La Paz, Sucre</td>
+					<td data-sortable="1825-08-06">6 August 1825</td>
 				</tr>
 				<tr>
 					<td>Brazil</td>
@@ -80,6 +83,7 @@
 					<td align="right">198,739,269</td>
 					<td align="right">23.3</td>
 					<td>Brasília</td>
+					<td data-sortable="1822-09-07">7 September 1822</td>
 				</tr>
 				<tr>
 					<td>Chile</td>
@@ -87,6 +91,7 @@
 					<td align="right">16,601,707</td>
 					<td align="right">21.9</td>
 					<td>Santiago</td>
+					<td data-sortable="1818-02-12">12 February 1818</td>
 				</tr>
 				<tr>
 					<td>Colombia</td>
@@ -94,6 +99,7 @@
 					<td align="right">45,644,023</td>
 					<td align="right">40.1</td>
 					<td>Bogotá</td>
+					<td data-sortable="1810-07-20">20 July 1810</td>
 				</tr>
 				<tr>
 					<td>Ecuador</td>
@@ -101,6 +107,7 @@
 					<td align="right">14,573,101</td>
 					<td align="right">51.4</td>
 					<td>Quito</td>
+					<td data-sortable="1809-08-10">10 August 1809</td>
 				</tr>
 				<tr>
 					<td>Falkland Islands (UK)</td>
@@ -108,6 +115,7 @@
 					<td align="right">3,140</td>
 					<td align="right">0.26</td>
 					<td>Stanley</td>
+					<td data-sortable=""></td>
 				</tr>
 				<tr>
 					<td>French Guiana (France)</td>
@@ -115,6 +123,7 @@
 					<td align="right">221,500</td>
 					<td align="right">2.7</td>
 					<td>Cayenne</td>
+					<td data-sortable=""></td>
 				</tr>
 				<tr>
 					<td>Guyana</td>
@@ -122,6 +131,7 @@
 					<td align="right">772,298</td>
 					<td align="right">3.6</td>
 					<td>Georgetown</td>
+					<td data-sortable="1966-05-26">26 May 1966</td>
 				</tr>
 				<tr>
 					<td>Paraguay</td>
@@ -129,6 +139,7 @@
 					<td align="right">6,995,655</td>
 					<td align="right">17.2</td>
 					<td>Asunción</td>
+					<td data-sortable="1811-05-14">14 May 1811</td>
 				</tr>
 				<tr>
 					<td>Peru</td>
@@ -136,6 +147,7 @@
 					<td align="right">29,546,963</td>
 					<td align="right">23.0</td>
 					<td>Lima</td>
+					<td data-sortable="1821-07-28">28 July 1821</td>
 				</tr>
 				<tr>
 					<td>South Georgia and South Sandwich Islands (UK)</td>
@@ -143,6 +155,7 @@
 					<td align="right">0</td>
 					<td align="right">0</td>
 					<td>Grytviken</td>
+					<td data-sortable=""></td>
 				</tr>
 				<tr>
 					<td>Suriname</td>
@@ -150,6 +163,7 @@
 					<td align="right">481,267</td>
 					<td align="right">2.9</td>
 					<td>Paramaribo</td>
+					<td data-sortable="1975-11-25">25 November 1975</td>
 				</tr>
 				<tr>
 					<td>Uruguay</td>
@@ -157,6 +171,7 @@
 					<td align="right">3,494,382</td>
 					<td align="right">19.8</td>
 					<td>Montevideo</td>
+					<td data-sortable="1825-08-25">25 August 1825</td>
 				</tr>
 				<tr>
 					<td>Venezuela</td>
@@ -164,11 +179,12 @@
 					<td align="right">26,814,843</td>
 					<td align="right">29.4</td>
 					<td>Caracas</td>
+					<td data-sortable="1830-01-13">13 January 1830</td>
 				</tr>
 			</tbody>
 		</table>
 		<p>(from <a href="http://en.wikipedia.org/wiki/Geography_of_South_America">Wikipedia</a>)</p>
-		<p>What's stored in localStorage:</p>
+		<p>What's stored in localStorage: <button onclick="clearStorage();">Clear &amp; reload</button></p>
 		<pre id="output"></pre>
 		<script src="../extend/extend.js"></script>
 		<script src="table.js"></script>
@@ -188,21 +204,37 @@
 		initFilter(filter, table);
 
 		if ('addEventListener' in this) {
-			table.tHead.addEventListener ('click', function () {
-				output.textContent = localStorage.getItem (table.id);
-			}, false);
-			list.addEventListener ('change', function () {
-				output.textContent = localStorage.getItem (table.id);
-			}, false);
-			output.textContent = localStorage.getItem (table.id);
+			table.tHead.addEventListener('click', updateOutput, false);
+			list.addEventListener('change', updateOutput, false);
 		} else {
-			table.tHead.attachEvent ('onclick', function () {
-				output.innerText = localStorage.getItem (table.id);
-			});
-			list.attachEvent ('onclick', function () {
-				output.innerText = localStorage.getItem (table.id);
-			});
-			output.innerText = localStorage.getItem (table.id);
+			table.tHead.attachEvent('onclick', updateOutput);
+			list.attachEvent('onclick', updateOutput);
+		}
+
+		updateOutput();
+
+		function updateOutput() {
+			var value = localStorage.getItem(table.id);
+			if ('textContent' in output)
+				output.textContent = value;
+			else
+				output.innerText = value;
+		}
+
+		function clearFilter() {
+			filter._value = filter.value = '';
+			table.filter('');
+		}
+
+		function clearStorage() {
+			var storageData = JSON.parse(localStorage.getItem(table.id));
+			if (!storageData) {
+				storageData = {};
+			}
+			delete storageData[storageKey];
+			localStorage.setItem(table.id, JSON.stringify(storageData));
+			// updateOutput();
+			location.reload();
 		}
 
 		</script>

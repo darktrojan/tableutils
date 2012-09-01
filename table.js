@@ -226,7 +226,7 @@ function initTable(table) {
 			var matches = 0;
 			for (var k = 0; k < words.length; k++) {
 				var matchesWord = false;
-				for (var j = 1; j < cells.length; j++) {
+				for (var j = 0; j < cells.length; j++) {
 					if (cells[j].style.display != 'none') {
 						var content = 'textContent' in cells[j] ? cells[j].textContent.normalize() : cells[j].innerText.normalize();
 						if (content.indexOf(words[k]) >= 0) {
