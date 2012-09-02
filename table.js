@@ -20,7 +20,7 @@ function initTable(table) {
 		else
 			th = window.event.srcElement;
 
-		if (!$cnc(th, 'sortable'))
+		if (!th.classList.contains('sortable'))
 			return;
 
 		var colNum;
@@ -38,14 +38,14 @@ function initTable(table) {
 		var th = tr.cells[colNum];
 
 		if (typeof descending == 'undefined') {
-			descending = $cnc(th, 'sort-asc');
+			descending = th.classList.contains('sort-asc');
 		}
 
 		for (var i = 0; i < tr.cells.length; i++) {
-			$cnr(tr.cells[i], 'sort-asc');
-			$cnr(tr.cells[i], 'sort-desc');
+			tr.cells[i].classList.remove('sort-asc');
+			tr.cells[i].classList.remove('sort-desc');
 		}
-		$cna(th, descending ? 'sort-desc' : 'sort-asc');
+		th.classList.add(descending ? 'sort-desc' : 'sort-asc');
 
 		this.sortByColumnInternal(colNum, descending);
 	};
@@ -64,12 +64,9 @@ function initTable(table) {
 			if (a.hasAttribute('data-sortable') && b.hasAttribute('data-sortable')) {
 				a = a.getAttribute('data-sortable');
 				b = b.getAttribute('data-sortable');
-			} else if ('textContent' in a) {
+			} else {
 				a = a.textContent.normalize();
 				b = b.textContent.normalize();
-			} else {
-				a = a.innerText.normalize();
-				b = b.innerText.normalize();
 			}
 
 			if (/^[0-9,.]+$/.test(a) && /^[0-9,.]+$/.test(b)) {
@@ -219,7 +216,7 @@ function initTable(table) {
 		}
 		for (var i = 0; i < rows.length; i++) {
 			if (!words.length) {
-				$cnr(rows[i], 'filtered');
+				rows[i].classList.remove('filtered');
 				continue;
 			}
 			var cells = rows[i].cells;
@@ -228,7 +225,7 @@ function initTable(table) {
 				var matchesWord = false;
 				for (var j = 0; j < cells.length; j++) {
 					if (cells[j].style.display != 'none') {
-						var content = 'textContent' in cells[j] ? cells[j].textContent.normalize() : cells[j].innerText.normalize();
+						var content = cells[j].textContent.normalize();
 						if (content.indexOf(words[k]) >= 0) {
 							matchesWord = true;
 							break;
@@ -241,9 +238,9 @@ function initTable(table) {
 					break;
 			}
 			if (matches == words.length)
-				$cnr(rows[i], 'filtered');
+				rows[i].classList.remove('filtered');
 			else
-				$cna(rows[i], 'filtered');
+				rows[i].classList.add('filtered');
 		}
 	};
 

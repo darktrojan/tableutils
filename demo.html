@@ -186,39 +186,31 @@
 		<p>(from <a href="http://en.wikipedia.org/wiki/Geography_of_South_America">Wikipedia</a>)</p>
 		<p>What's stored in localStorage: <button onclick="clearStorage();">Clear &amp; reload</button></p>
 		<pre id="output"></pre>
-		<script src="../extend/extend.js"></script>
+		<!--[if IE 8]><script src="shim/shim.js"></script><![endif]-->
 		<script src="table.js"></script>
 		<script>
 
 		var storageKey = 'tableUtilsTest';
 
-		var table = $('table');
-		var list = $('list');
-		// var select = $('select');
-		var filter = $('filter');
-		var output = $('output');
+		var table = document.getElementById('table');
+		var list = document.getElementById('list');
+		// var select = document.getElementById('select');
+		var filter = document.getElementById('filter');
+		var output = document.getElementById('output');
 
 		initTable(table);
 		initList(list, table);
 		// initSelect(select, table);
 		initFilter(filter, table);
 
-		if ('addEventListener' in this) {
-			table.tHead.addEventListener('click', updateOutput, false);
-			list.addEventListener('change', updateOutput, false);
-		} else {
-			table.tHead.attachEvent('onclick', updateOutput);
-			list.attachEvent('onclick', updateOutput);
-		}
+		table.tHead.addEventListener('click', updateOutput, false);
+		list.addEventListener('change', updateOutput, false);
 
 		updateOutput();
 
 		function updateOutput() {
 			var value = localStorage.getItem(table.id);
-			if ('textContent' in output)
-				output.textContent = value;
-			else
-				output.innerText = value;
+			output.textContent = value;
 		}
 
 		function clearFilter() {
