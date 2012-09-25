@@ -31,6 +31,8 @@
 			text-overflow: ellipsis;
 		}
 		</style>
+		<!--[if IE 8]><script src="shim/shim.js" type="text/javascript"></script><![endif]-->
+		<!--[if IE 9]><script src="shim/shim.js" type="text/javascript"></script><![endif]-->
 	</head>
 	<body>
 		<p>Display these columns:</p>
@@ -187,7 +189,6 @@
 		<p>(from <a href="http://en.wikipedia.org/wiki/Geography_of_South_America">Wikipedia</a>)</p>
 		<p>What's stored in localStorage: <button onclick="clearStorage();">Clear &amp; reload</button></p>
 		<pre id="output"></pre>
-		<!--[if IE 8]><script src="shim/shim.js"></script><![endif]-->
 		<script src="table.js"></script>
 		<script>
 
