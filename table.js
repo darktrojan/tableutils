@@ -1,14 +1,14 @@
 String.prototype.normalize = function() {
-	var str = this.toLowerCase();
-	str = str.replace(/[\u00e0-\u00e5]/g, 'a');
-	str = str.replace(/\u00e7/g, 'c');
-	str = str.replace(/[\u00e8-\u00eb]/g, 'e');
-	str = str.replace(/[\u00ec-\u00ef]/g, 'i');
-	str = str.replace(/\u00f1/g, 'n');
-	str = str.replace(/[\u00f2-\u00f6\u00f8]/g, 'o');
-	str = str.replace(/[\u00f9-\u00fc]/g, 'u');
-	str = str.replace(/[\u00fd\u00ff]/g, 'y');
-	return str;
+	return this.toLowerCase()
+		.replace(/[\u00e0-\u00e5]/g, 'a')
+		.replace(/\u00e7/g, 'c')
+		.replace(/[\u00e8-\u00eb]/g, 'e')
+		.replace(/[\u00ec-\u00ef]/g, 'i')
+		.replace(/\u00f1/g, 'n')
+		.replace(/[\u00f2-\u00f6\u00f8]/g, 'o')
+		.replace(/[\u00f9-\u00fc]/g, 'u')
+		.replace(/[\u00fd\u00ff]/g, 'y')
+		.replace(/[\W_]/g, '');
 };
 
 function initTable(table) {
