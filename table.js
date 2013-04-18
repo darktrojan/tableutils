@@ -334,5 +334,29 @@ function initFilter(input, table) {
 		this._value = this.value;
 
 		table.filter(this.value);
+
+		if (typeof storageKey == 'string' && 'sessionStorage' in window) {
+			var storageData = JSON.parse(sessionStorage.getItem(this.id));
+			if (!storageData) {
+				storageData = {};
+			}
+			if (!(storageKey in storageData)) {
+				storageData[storageKey] = {};
+			}
+			storageData[storageKey].filter = this.value;
+			sessionStorage.setItem(table.id, JSON.stringify(storageData));
+		}
 	};
+
+	if (typeof storageKey == 'string' && 'sessionStorage' in window) {
+		var storageData = JSON.parse(sessionStorage.getItem(table.id));
+		console.log(storageData);
+		if (storageData && storageKey in storageData) {
+			var data = storageData[storageKey];
+			if ('filter' in data) {
+				input.value = input._value = data.filter;
+				table.filter(data.filter);
+			}
+		}
+	}
 }
