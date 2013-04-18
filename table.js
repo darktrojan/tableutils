@@ -350,7 +350,6 @@ function initFilter(input, table) {
 
 	if (typeof storageKey == 'string' && 'sessionStorage' in window) {
 		var storageData = JSON.parse(sessionStorage.getItem(table.id));
-		console.log(storageData);
 		if (storageData && storageKey in storageData) {
 			var data = storageData[storageKey];
 			if ('filter' in data) {
