@@ -112,6 +112,10 @@ function initTable(table) {
 	};
 
 	table.hideColumns = function(colNums) {
+		if (colNums.length == 1 && colNums[0] == '') {
+			colNums = [];
+		}
+
 		var thead = this.tHead;
 		var tbody = this.tBodies[0];
 
@@ -160,6 +164,10 @@ function initTable(table) {
 	};
 
 	table.showColumns = function(colNums) {
+		if (colNums.length == 1 && colNums[0] == '') {
+			colNums = [];
+		}
+
 		var thead = this.tHead;
 		var tbody = this.tBodies[0];
 
