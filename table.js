@@ -37,6 +37,10 @@ function initTable(table) {
 		var tr = this.querySelector('.sortrow');
 		var th = tr.cells[colNum];
 
+		if (!th) {
+			return;
+		}
+
 		if (typeof descending == 'undefined') {
 			descending = th.classList.contains('sort-asc');
 		}
@@ -132,6 +136,15 @@ function initTable(table) {
 
 		for (var j = 0, jCount = colNums.length; j < jCount; j++) {
 			var colNum = parseInt(colNums[j]);
+
+			if (!this.querySelector('.sortrow').cells[colNum]) {
+				var index = hiddenColumns.indexOf(colNum);
+				if (index >= 0) {
+					hiddenColumns.splice(index, 1);
+				}
+				continue;
+			}
+
 			for (var i = 0, iCount = thead.rows.length; i < iCount; i++) {
 				thead.rows[i].cells[colNum].style.display = 'none';
 			}
@@ -184,15 +197,20 @@ function initTable(table) {
 
 		for (var j = 0, jCount = colNums.length; j < jCount; j++) {
 			var colNum = parseInt(colNums[j]);
+			var index = hiddenColumns.indexOf(colNum);
+			if (index >= 0) {
+				hiddenColumns.splice(index, 1);
+			}
+
+			if (!this.querySelector('.sortrow').cells[colNum]) {
+				continue;
+			}
+
 			for (var i = 0, iCount = thead.rows.length; i < iCount; i++) {
 				thead.rows[i].cells[colNum].style.display = '';
 			}
 			for (var i = 0, iCount = tbody.rows.length; i < iCount; i++) {
 				tbody.rows[i].cells[colNum].style.display = '';
-			}
-			var index = hiddenColumns.indexOf(colNum);
-			if (index >= 0) {
-				hiddenColumns.splice(index, 1);
 			}
 		}
 
