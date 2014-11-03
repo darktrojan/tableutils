@@ -1,11 +1,11 @@
 .sortable {
-	background: #f7f7f7 url(sort-none.gif) right center no-repeat;
+	background: #f7f7f7 url('data:image/gif;base64,R0lGODlhCwAJAIAAAEdHRwAAACH5BAEAAAEALAAAAAALAAkAAAIRjGGpwJoMHZyurtlurNuiWgAAOw==') right center no-repeat;
 	padding-right: 15px !important;
 	cursor: pointer;
 }
 .sort-asc {
-	background-image: url(sort-asc.gif);
+	background-image: url('data:image/gif;base64,R0lGODlhCwAJAIAAAEdHRwAAACH5BAEAAAEALAAAAAALAAkAAAIOjGGpwJoMHZyu2ouzTgUAOw==');
 }
 .sort-desc {
-	background-image: url(sort-desc.gif);
+	background-image: url('data:image/gif;base64,R0lGODlhCwAJAIAAAEdHRwAAACH5BAEAAAEALAAAAAALAAkAAAINjI+py+0AI0hyqthsKgA7');
 }
