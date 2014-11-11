@@ -171,6 +171,8 @@ function initTable(table) {
 			localStorage.setItem(this.id, JSON.stringify(storageData));
 		}
 
+		this.filter(this.lastFilterString);
+
 		if (typeof this.onresize == 'function') {
 			this.onresize();
 		}
@@ -229,6 +231,8 @@ function initTable(table) {
 			localStorage.setItem(this.id, JSON.stringify(storageData));
 		}
 
+		this.filter(this.lastFilterString);
+
 		if (typeof this.onresize == 'function') {
 			this.onresize();
 		}
@@ -285,6 +289,20 @@ function initTable(table) {
 		} else {
 			table.columnFilters[colNum] = value.normalize();
 		}
+
+		if (typeof storageKey == 'string') {
+			var storageData = JSON.parse(localStorage.getItem(this.id));
+			if (!storageData) {
+				storageData = {};
+			}
+			if (!(storageKey in storageData)) {
+				storageData[storageKey] = {};
+			}
+			storageData[storageKey].columnFilters = table.columnFilters;
+			storageData[storageKey].lastChange = Date.now();
+			localStorage.setItem(this.id, JSON.stringify(storageData));
+		}
+
 		table.filter(table.lastFilterString);
 	};
 
@@ -312,6 +330,10 @@ function initTable(table) {
 				table.setAttribute('data-hiddencolumns', '');
 				table.hideColumns(data.hiddenColumns);
 				doHide = false;
+			}
+			if ('columnFilters' in data) {
+				table.columnFilters = data.columnFilters;
+				table.filter(table.lastFilterString);
 			}
 		}
 	}
