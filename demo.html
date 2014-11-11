@@ -205,7 +205,7 @@
 			</tbody>
 		</table>
 		<p>(from <a href="http://en.wikipedia.org/wiki/Geography_of_South_America">Wikipedia</a>)</p>
-		<p>What's stored in localStorage: <button onclick="clearStorage();">Clear &amp; reload</button></p>
+		<p>What's stored in localStorage/sessionStorage: <button onclick="clearStorage();">Clear &amp; reload</button></p>
 		<pre id="output"></pre>
 		<script src="table.js"></script>
 		<script>
@@ -246,7 +246,14 @@
 			}
 			delete storageData[storageKey];
 			localStorage.setItem(table.id, JSON.stringify(storageData));
-			// updateOutput();
+
+			storageData = JSON.parse(sessionStorage.getItem(table.id));
+			if (!storageData) {
+				storageData = {};
+			}
+			delete storageData[storageKey];
+			sessionStorage.setItem(table.id, JSON.stringify(storageData));
+
 			location.reload();
 		}
 
