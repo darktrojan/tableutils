@@ -42,6 +42,7 @@
 			<li><label><input type="checkbox" data-columns="2,3" />Population (2 columns)</label></li>
 			<li><label><input type="checkbox" data-columns="4" />Capital</label></li>
 			<li><label><input type="checkbox" data-columns="5" />Independence</label></li>
+			<li><label><input type="checkbox" data-columns="6" />Border with Brazil</label></li>
 		</ul>
 		<!-- <select id="select" multiple size="5">
 			<option value="0" />Name of territory</option>
@@ -49,6 +50,7 @@
 			<option value="2,3" />Population (2 columns)</option>
 			<option value="4" />Capital</option>
 			<option value="5" />Independence</option>
+			<option value="6" />Border with Brazil</option>
 		</select> -->
 		<p>Filter: <input id="filter" /><button onclick="clearFilter();">Clear</button></p>
 		<table cellspacing="0" id="table"
@@ -61,6 +63,7 @@
 					<th class="sortable">Population density<br />(per km²)</th>
 					<th class="sortable">Capital</th>
 					<th class="sortable">Independence</th>
+					<th class="sortable">Border with Brazil</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -71,6 +74,7 @@
 					<td align="right">14.8</td>
 					<td>Buenos Aires</td>
 					<td data-sortable="1816-07-09">9 July 1816</td>
+					<td>Yes</td>
 				</tr>
 				<tr>
 					<td>Bolivia</td>
@@ -79,6 +83,7 @@
 					<td align="right">8.9</td>
 					<td>La Paz, Sucre</td>
 					<td data-sortable="1825-08-06">6 August 1825</td>
+					<td>Yes</td>
 				</tr>
 				<tr>
 					<td>Brazil</td>
@@ -87,6 +92,7 @@
 					<td align="right">23.3</td>
 					<td>Brasília</td>
 					<td data-sortable="1822-09-07">7 September 1822</td>
+					<td>No</td>
 				</tr>
 				<tr>
 					<td>Chile</td>
@@ -95,6 +101,7 @@
 					<td align="right">21.9</td>
 					<td>Santiago</td>
 					<td data-sortable="1818-02-12">12 February 1818</td>
+					<td>No</td>
 				</tr>
 				<tr>
 					<td>Colombia</td>
@@ -103,6 +110,7 @@
 					<td align="right">40.1</td>
 					<td>Bogotá</td>
 					<td data-sortable="1810-07-20">20 July 1810</td>
+					<td>Yes</td>
 				</tr>
 				<tr>
 					<td>Ecuador</td>
@@ -111,6 +119,7 @@
 					<td align="right">51.4</td>
 					<td>Quito</td>
 					<td data-sortable="1809-08-10">10 August 1809</td>
+					<td>No</td>
 				</tr>
 				<tr>
 					<td>Falkland Islands (UK)</td>
@@ -119,6 +128,7 @@
 					<td align="right">0.26</td>
 					<td>Stanley</td>
 					<td data-sortable=""></td>
+					<td>No</td>
 				</tr>
 				<tr>
 					<td>French Guiana (France)</td>
@@ -127,6 +137,7 @@
 					<td align="right">2.7</td>
 					<td>Cayenne</td>
 					<td data-sortable=""></td>
+					<td>Yes</td>
 				</tr>
 				<tr>
 					<td>Guyana</td>
@@ -135,6 +146,7 @@
 					<td align="right">3.6</td>
 					<td>Georgetown</td>
 					<td data-sortable="1966-05-26">26 May 1966</td>
+					<td>Yes</td>
 				</tr>
 				<tr>
 					<td>Paraguay</td>
@@ -143,6 +155,7 @@
 					<td align="right">17.2</td>
 					<td>Asunción</td>
 					<td data-sortable="1811-05-14">14 May 1811</td>
+					<td>Yes</td>
 				</tr>
 				<tr>
 					<td>Peru</td>
@@ -151,6 +164,7 @@
 					<td align="right">23.0</td>
 					<td>Lima</td>
 					<td data-sortable="1821-07-28">28 July 1821</td>
+					<td>Yes</td>
 				</tr>
 				<tr>
 					<td>South Georgia and South Sandwich Islands (UK)</td>
@@ -159,6 +173,7 @@
 					<td align="right">0</td>
 					<td>Grytviken</td>
 					<td data-sortable=""></td>
+					<td>No</td>
 				</tr>
 				<tr>
 					<td>Suriname</td>
@@ -167,6 +182,7 @@
 					<td align="right">2.9</td>
 					<td>Paramaribo</td>
 					<td data-sortable="1975-11-25">25 November 1975</td>
+					<td>Yes</td>
 				</tr>
 				<tr>
 					<td>Uruguay</td>
@@ -175,6 +191,7 @@
 					<td align="right">19.8</td>
 					<td>Montevideo</td>
 					<td data-sortable="1825-08-25">25 August 1825</td>
+					<td>Yes</td>
 				</tr>
 				<tr>
 					<td>Venezuela</td>
@@ -183,6 +200,7 @@
 					<td align="right">29.4</td>
 					<td>Caracas</td>
 					<td data-sortable="1830-01-13">13 January 1830</td>
+					<td>Yes</td>
 				</tr>
 			</tbody>
 		</table>

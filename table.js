@@ -234,13 +234,22 @@ function initTable(table) {
 		}
 	};
 
+	table.lastFilterString = '';
+	table.columnFilters = {};
+
 	table.filter = function(filterString) {
+		table.lastFilterString = filterString;
 		var rows = table.tBodies[0].rows;
 		var words = filterString.trim().normalize().split(/\s+/);
 		if (words.length == 1 && words[0] == '') {
 			words.pop();
 		}
 		for (var i = 0; i < rows.length; i++) {
+			if (!table.matchesColumnFilters(rows[i])) {
+				rows[i].classList.add('filtered');
+				continue;
+			}
+
 			if (!words.length) {
 				rows[i].classList.remove('filtered');
 				continue;
@@ -268,6 +277,25 @@ function initTable(table) {
 			else
 				rows[i].classList.add('filtered');
 		}
+	};
+
+	table.setColumnFilter = function(colNum, value) {
+		if (value === null) {
+			delete table.columnFilters[colNum];
+		} else {
+			table.columnFilters[colNum] = value.normalize();
+		}
+		table.filter(table.lastFilterString);
+	};
+
+	table.matchesColumnFilters = function(row) {
+		var cells = row.cells;
+		for (var colNum in table.columnFilters) {
+			if (cells[colNum].textContent.normalize() != table.columnFilters[colNum]) {
+				return false;
+			}
+		}
+		return true;
 	};
 
 	var doSort = true;
