@@ -100,7 +100,7 @@ function initTable(table) {
 		tbody.appendChild(addFrag);
 		this.appendChild(removeFrag);
 
-		if (typeof storageKey == 'string' && 'localStorage' in window) {
+		if (typeof storageKey == 'string') {
 			var storageData = JSON.parse(localStorage.getItem(this.id));
 			if (!storageData) {
 				storageData = {};
@@ -158,7 +158,7 @@ function initTable(table) {
 
 		this.setAttribute('data-hiddencolumns', hiddenColumns.join(','));
 
-		if (typeof storageKey == 'string' && 'localStorage' in window) {
+		if (typeof storageKey == 'string') {
 			var storageData = JSON.parse(localStorage.getItem(this.id));
 			if (!storageData) {
 				storageData = {};
@@ -216,7 +216,7 @@ function initTable(table) {
 
 		this.setAttribute('data-hiddencolumns', hiddenColumns.join(','));
 
-		if (typeof storageKey == 'string' && 'localStorage' in window) {
+		if (typeof storageKey == 'string') {
 			var storageData = JSON.parse(localStorage.getItem(this.id));
 			if (!storageData) {
 				storageData = {};
@@ -300,7 +300,7 @@ function initTable(table) {
 
 	var doSort = true;
 	var doHide = true;
-	if (typeof storageKey == 'string' && 'localStorage' in window) {
+	if (typeof storageKey == 'string') {
 		var storageData = JSON.parse(localStorage.getItem(table.id));
 		if (storageData && storageKey in storageData) {
 			var data = storageData[storageKey];
@@ -380,7 +380,8 @@ function initFilter(input, table) {
 			event = window.event;
 		}
 		if (event.keyCode == 27) {
-			this.value = '';
+			this.clearFilter();
+			return;
 		}
 		if (this._value == this.value) {
 			return;
@@ -389,7 +390,7 @@ function initFilter(input, table) {
 
 		table.filter(this.value);
 
-		if (typeof storageKey == 'string' && 'sessionStorage' in window) {
+		if (typeof storageKey == 'string') {
 			var storageData = JSON.parse(sessionStorage.getItem(this.id));
 			if (!storageData) {
 				storageData = {};
@@ -402,7 +403,20 @@ function initFilter(input, table) {
 		}
 	};
 
-	if (typeof storageKey == 'string' && 'sessionStorage' in window) {
+	input.clearFilter = function() {
+		input.value = input._value = '';
+		table.filter('');
+
+		if (typeof storageKey == 'string') {
+			var storageData = JSON.parse(sessionStorage.getItem(table.id));
+			if (storageData && storageKey in storageData) {
+				delete storageData[storageKey].filter;
+				sessionStorage.setItem(table.id, JSON.stringify(storageData));
+			}
+		}
+	};
+
+	if (typeof storageKey == 'string') {
 		var storageData = JSON.parse(sessionStorage.getItem(table.id));
 		if (storageData && storageKey in storageData) {
 			var data = storageData[storageKey];

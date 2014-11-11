@@ -225,17 +225,18 @@
 
 		table.tHead.addEventListener('click', updateOutput, false);
 		list.addEventListener('change', updateOutput, false);
+		filter.addEventListener('keyup', updateOutput, false);
 
 		updateOutput();
 
 		function updateOutput() {
-			var value = localStorage.getItem(table.id);
-			output.textContent = value;
+			output.textContent = localStorage.getItem(table.id) + '\n' +
+					sessionStorage.getItem(table.id);
 		}
 
 		function clearFilter() {
-			filter._value = filter.value = '';
-			table.filter('');
+			filter.clearFilter();
+			updateOutput();
 		}
 
 		function clearStorage() {
