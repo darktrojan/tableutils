@@ -12,8 +12,8 @@ String.prototype.normalize = function() {
 };
 
 function initTable(table) {
-	var tr = table.querySelector('.sortrow');
-	tr.onclick = function(event) {
+	var sortRow = table.querySelector('.sortrow');
+	sortRow.onclick = function(event) {
 		var th;
 		if (event)
 			th = event.target;
@@ -33,9 +33,56 @@ function initTable(table) {
 		table.sortByColumn(colNum);
 	};
 
+	function setFilter() {
+		var group = this.parentNode.parentNode;
+		var checkboxes = group.querySelectorAll('input[type="checkbox"]');
+		var values = [];
+		for (var i = 0; i < checkboxes.length; i++) {
+			if (checkboxes[i].checked)
+				values.push(checkboxes[i].value);
+		}
+		table.setColumnFilter(6, values);
+	}
+
+	if (sortRow.querySelector('.filterable')) {
+		var filterRow = document.createElement('tr');
+		filterRow.classList.add('filterrow');
+		for (var i = 0; i < sortRow.cells.length; i++) {
+			var td = document.createElement('td');
+			filterRow.appendChild(td);
+			if (!sortRow.cells[i].classList.contains('filterable'))
+				continue;
+
+			var values = [];
+			for (var j = 0; j < table.tBodies[0].rows.length; j++) {
+				var value = table.tBodies[0].rows[j].cells[i].textContent;
+				if (values.indexOf(value) == -1) {
+					values.push(value);
+				}
+			}
+			values = values.sort();
+			for (var j = 0; j < values.length; j++) {
+				var checkbox = document.createElement('input');
+				checkbox.setAttribute('type', 'checkbox');
+				checkbox.checked = true;
+				checkbox.onclick = setFilter;
+				checkbox.value = values[j].normalize();
+				var label = document.createElement('label');
+				label.appendChild(checkbox);
+				if (values[j]) {
+					label.appendChild(document.createTextNode('\u00a0' + values[j]));
+				} else {
+					label.classList.add('novalue');
+					label.appendChild(document.createTextNode('\u00a0No value'));
+				}
+				td.appendChild(label);
+			}
+		}
+		sortRow.parentNode.insertBefore(filterRow, sortRow.nextSibling);
+	}
+
 	table.sortByColumn = function(colNum, descending) {
-		var tr = this.querySelector('.sortrow');
-		var th = tr.cells[colNum];
+		var th = sortRow.cells[colNum];
 
 		if (!th) {
 			return;
@@ -45,9 +92,9 @@ function initTable(table) {
 			descending = th.classList.contains('sort-asc');
 		}
 
-		for (var i = 0; i < tr.cells.length; i++) {
-			tr.cells[i].classList.remove('sort-asc');
-			tr.cells[i].classList.remove('sort-desc');
+		for (var i = 0; i < sortRow.cells.length; i++) {
+			sortRow.cells[i].classList.remove('sort-asc');
+			sortRow.cells[i].classList.remove('sort-desc');
 		}
 		th.classList.add(descending ? 'sort-desc' : 'sort-asc');
 
@@ -345,6 +392,13 @@ function initTable(table) {
 			}
 			if ('columnFilters' in data) {
 				table.columnFilters = data.columnFilters;
+				for (var colNum in table.columnFilters) {
+					var filters = table.columnFilters[colNum];
+					var checkboxes = filterRow.cells[colNum].querySelectorAll('input[type="checkbox"]');
+					for (var i = 0; i < checkboxes.length; i++) {
+						checkboxes[i].checked = filters.indexOf(checkboxes[i].value) >= 0;
+					}
+				}
 				table.filter(table.lastFilterString);
 			}
 		}

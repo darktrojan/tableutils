@@ -9,3 +9,11 @@
 .sort-desc {
 	background-image: url('data:image/gif;base64,R0lGODlhCwAJAIAAAEdHRwAAACH5BAEAAAEALAAAAAALAAkAAAINjI+py+0AI0hyqthsKgA7');
 }
+.filterrow > td > label {
+	display: block;
+	cursor: pointer;
+}
+label.novalue {
+	font-style: italic;
+	color: graytext;
+}
