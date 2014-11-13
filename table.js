@@ -286,8 +286,14 @@ function initTable(table) {
 	table.setColumnFilter = function(colNum, value) {
 		if (value === null) {
 			delete table.columnFilters[colNum];
-		} else {
+		} else if (typeof value == 'string') {
 			table.columnFilters[colNum] = value.normalize();
+		} else {
+			var normalFilters = [];
+			for (var i = 0; i < value.length; i++) {
+				normalFilters.push(value[i].normalize());
+			}
+			table.columnFilters[colNum] = normalFilters;
 		}
 
 		if (typeof storageKey == 'string') {
@@ -309,7 +315,13 @@ function initTable(table) {
 	table.matchesColumnFilters = function(row) {
 		var cells = row.cells;
 		for (var colNum in table.columnFilters) {
-			if (cells[colNum].textContent.normalize() != table.columnFilters[colNum]) {
+			var filter = table.columnFilters[colNum];
+			var value = cells[colNum].textContent.normalize();
+			if (typeof filter == 'string') {
+				if (value != filter) {
+					return false;
+				}
+			} else if (filter.indexOf(value) == -1) {
 				return false;
 			}
 		}
