@@ -49,11 +49,12 @@ function initTable(table) {
 		filterRow.classList.add('filterrow');
 		for (var i = 0; i < sortRow.cells.length; i++) {
 			var td = document.createElement('td');
-			td.colNum = i;
 			filterRow.appendChild(td);
 			if (!sortRow.cells[i].classList.contains('filterable'))
 				continue;
 
+			td.colNum = i;
+			td.vAlign = 'bottom';
 			var values = [];
 			for (var j = 0; j < table.tBodies[0].rows.length; j++) {
 				var value = table.tBodies[0].rows[j].cells[i].textContent;
