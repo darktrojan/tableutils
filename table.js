@@ -41,7 +41,7 @@ function initTable(table) {
 			if (checkboxes[i].checked)
 				values.push(checkboxes[i].value);
 		}
-		table.setColumnFilter(6, values);
+		table.setColumnFilter(group.colNum, values);
 	}
 
 	if (sortRow.querySelector('.filterable')) {
@@ -49,6 +49,7 @@ function initTable(table) {
 		filterRow.classList.add('filterrow');
 		for (var i = 0; i < sortRow.cells.length; i++) {
 			var td = document.createElement('td');
+			td.colNum = i;
 			filterRow.appendChild(td);
 			if (!sortRow.cells[i].classList.contains('filterable'))
 				continue;
