@@ -41,6 +41,8 @@ function initTable(table) {
 			if (checkboxes[i].checked)
 				values.push(checkboxes[i].value);
 		}
+		if (values.length == checkboxes.length)
+			values = null;
 		table.setColumnFilter(group.colNum, values);
 	}
 
