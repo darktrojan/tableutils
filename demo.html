@@ -53,6 +53,7 @@
 			<option value="6" />Border with Brazil</option>
 		</select> -->
 		<p>Filter: <input id="filter" /><button onclick="clearFilter();">Clear</button></p>
+		<p><button onclick="toggleFilterRow();">Toggle Filter Row</button>
 		<table cellspacing="0" id="table"
 			data-hiddencolumns="2,3" data-sortcolumn="0" data-sortdirection="asc">
 			<thead>
@@ -236,6 +237,11 @@
 
 		function clearFilter() {
 			filter.clearFilter();
+			updateOutput();
+		}
+
+		function toggleFilterRow() {
+			table.toggleFilterRow();
 			updateOutput();
 		}
 

@@ -12,6 +12,7 @@ String.prototype.normalize = function() {
 };
 
 function initTable(table) {
+	var filterRow;
 	var sortRow = table.querySelector('.sortrow');
 	sortRow.onclick = function(event) {
 		var th;
@@ -47,7 +48,7 @@ function initTable(table) {
 	}
 
 	if (sortRow.querySelector('.filterable')) {
-		var filterRow = document.createElement('tr');
+		filterRow = document.createElement('tr');
 		filterRow.classList.add('filterrow');
 		for (var i = 0; i < sortRow.cells.length; i++) {
 			var td = document.createElement('td');
@@ -151,19 +152,8 @@ function initTable(table) {
 		tbody.appendChild(addFrag);
 		this.appendChild(removeFrag);
 
-		if (typeof storageKey == 'string') {
-			var storageData = JSON.parse(localStorage.getItem(this.id));
-			if (!storageData) {
-				storageData = {};
-			}
-			if (!(storageKey in storageData)) {
-				storageData[storageKey] = {};
-			}
-			storageData[storageKey].sortColumn = colNum;
-			storageData[storageKey].sortDirection = descending ? 'desc' : 'asc';
-			storageData[storageKey].lastChange = Date.now();
-			localStorage.setItem(this.id, JSON.stringify(storageData));
-		}
+		setLocalStorage('sortColumn', colNum);
+		setLocalStorage('sortDirection', descending ? 'desc' : 'asc');
 	};
 
 	table.hideColumns = function(colNums) {
@@ -209,18 +199,7 @@ function initTable(table) {
 
 		this.setAttribute('data-hiddencolumns', hiddenColumns.join(','));
 
-		if (typeof storageKey == 'string') {
-			var storageData = JSON.parse(localStorage.getItem(this.id));
-			if (!storageData) {
-				storageData = {};
-			}
-			if (!(storageKey in storageData)) {
-				storageData[storageKey] = {};
-			}
-			storageData[storageKey].hiddenColumns = hiddenColumns;
-			storageData[storageKey].lastChange = Date.now();
-			localStorage.setItem(this.id, JSON.stringify(storageData));
-		}
+		setLocalStorage('hiddenColumns', hiddenColumns);
 
 		this.filter(this.lastFilterString);
 
@@ -269,18 +248,7 @@ function initTable(table) {
 
 		this.setAttribute('data-hiddencolumns', hiddenColumns.join(','));
 
-		if (typeof storageKey == 'string') {
-			var storageData = JSON.parse(localStorage.getItem(this.id));
-			if (!storageData) {
-				storageData = {};
-			}
-			if (!(storageKey in storageData)) {
-				storageData[storageKey] = {};
-			}
-			storageData[storageKey].hiddenColumns = hiddenColumns;
-			storageData[storageKey].lastChange = Date.now();
-			localStorage.setItem(this.id, JSON.stringify(storageData));
-		}
+		setLocalStorage('hiddenColumns', hiddenColumns);
 
 		this.filter(this.lastFilterString);
 
@@ -347,18 +315,7 @@ function initTable(table) {
 			table.columnFilters[colNum] = normalFilters;
 		}
 
-		if (typeof storageKey == 'string') {
-			var storageData = JSON.parse(localStorage.getItem(this.id));
-			if (!storageData) {
-				storageData = {};
-			}
-			if (!(storageKey in storageData)) {
-				storageData[storageKey] = {};
-			}
-			storageData[storageKey].columnFilters = table.columnFilters;
-			storageData[storageKey].lastChange = Date.now();
-			localStorage.setItem(this.id, JSON.stringify(storageData));
-		}
+		setLocalStorage('columnFilters', table.columnFilters);
 
 		table.filter(table.lastFilterString);
 	};
@@ -377,6 +334,11 @@ function initTable(table) {
 			}
 		}
 		return true;
+	};
+
+	table.toggleFilterRow = function() {
+		if (filterRow)
+			setLocalStorage('hideFilterRow', filterRow.classList.toggle('filtered'));
 	};
 
 	var doSort = true;
@@ -405,6 +367,9 @@ function initTable(table) {
 				}
 				table.filter(table.lastFilterString);
 			}
+			if ('hideFilterRow' in data && data.hideFilterRow && filterRow) {
+				filterRow.classList.add('filtered');
+			}
 		}
 	}
 
@@ -419,6 +384,21 @@ function initTable(table) {
 		var hiddenColumnsAttr = table.getAttribute('data-hiddencolumns');
 		if (hiddenColumnsAttr !== null) {
 			table.hideColumns(hiddenColumnsAttr.split(','));
+		}
+	}
+
+	function setLocalStorage(key, value) {
+		if (typeof storageKey == 'string') {
+			var storageData = JSON.parse(localStorage.getItem(table.id));
+			if (!storageData) {
+				storageData = {};
+			}
+			if (!(storageKey in storageData)) {
+				storageData[storageKey] = {};
+			}
+			storageData[storageKey][key] = value;
+			storageData[storageKey].lastChange = Date.now();
+			localStorage.setItem(table.id, JSON.stringify(storageData));
 		}
 	}
 }
