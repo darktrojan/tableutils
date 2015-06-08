@@ -224,6 +224,7 @@
 		// initSelect(select, table);
 		initFilter(filter, table);
 
+		table.addEventListener('resize', function(event) { console.log(event); }, false);
 		table.tHead.addEventListener('click', updateOutput, false);
 		list.addEventListener('change', updateOutput, false);
 		filter.addEventListener('keyup', updateOutput, false);

@@ -300,6 +300,8 @@ function initTable(table) {
 			else
 				rows[i].classList.add('filtered');
 		}
+
+		table.fireResizeEvent();
 	};
 
 	table.setColumnFilter = function(colNum, value) {
@@ -337,8 +339,20 @@ function initTable(table) {
 	};
 
 	table.toggleFilterRow = function() {
-		if (filterRow)
+		if (filterRow) {
 			setLocalStorage('hideFilterRow', filterRow.classList.toggle('filtered'));
+			this.fireResizeEvent();
+		}
+	};
+
+	table.fireResizeEvent = function() {
+		try {
+			this.dispatchEvent(new Event('resize'));
+		} catch (ex) {
+			var event = document.createEvent('Event');
+			event.initEvent('resize', false, false);
+			this.dispatchEvent(event);
+		}
 	};
 
 	var doSort = true;
