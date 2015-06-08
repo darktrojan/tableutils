@@ -202,10 +202,6 @@ function initTable(table) {
 		setLocalStorage('hiddenColumns', hiddenColumns);
 
 		this.filter(this.lastFilterString);
-
-		if (typeof this.onresize == 'function') {
-			this.onresize();
-		}
 	};
 
 	table.showColumns = function(colNums) {
@@ -251,10 +247,6 @@ function initTable(table) {
 		setLocalStorage('hiddenColumns', hiddenColumns);
 
 		this.filter(this.lastFilterString);
-
-		if (typeof this.onresize == 'function') {
-			this.onresize();
-		}
 	};
 
 	table.lastFilterString = '';
