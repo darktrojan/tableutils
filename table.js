@@ -1,3 +1,4 @@
+/* globals storageKey */
 String.prototype.normalize = function() {
 	return this.toLowerCase()
 		.replace(/[\u00e0-\u00e5]/g, 'a')
@@ -11,6 +12,7 @@ String.prototype.normalize = function() {
 		.replace(/[\W_]/g, '');
 };
 
+/* exported initTable */
 function initTable(table) {
 	var filterRow;
 	var sortRow = table.querySelector('.sortrow');
@@ -409,6 +411,7 @@ function initTable(table) {
 	}
 }
 
+/* exported initList */
 function initList(list, table) {
 	function listClick() {
 		var colNums = this.getAttribute('data-columns').split(',');
@@ -428,6 +431,7 @@ function initList(list, table) {
 	}
 }
 
+/* exported initSelect */
 function initSelect(select, table) {
 	var options = select.options;
 	for (var i = 0; i < options.length; i++) {
@@ -452,6 +456,7 @@ function initSelect(select, table) {
 	};
 }
 
+/* exported initFilter */
 function initFilter(input, table) {
 	input.onkeyup = function(event) {
 		if (!event) {
