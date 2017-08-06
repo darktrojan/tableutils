@@ -67,7 +67,12 @@ function initTable(table) {
 					values.push(value);
 				}
 			}
-			values = values.sort();
+			values = values.sort(function(a, b) {
+				if (isNaN(parseFloat(a, 10)) || isNaN(parseFloat(b, 10))) {
+					return a == b ? 0 : (a < b ? -1 : 1);
+				}
+				return a - b;
+			});
 			for (var j = 0; j < values.length; j++) {
 				var checkbox = document.createElement('input');
 				checkbox.setAttribute('type', 'checkbox');
